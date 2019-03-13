@@ -8,4 +8,7 @@ import java.util.List;
 @Service
 public interface WishlistService {
     List<Wishlists> getAllWishlist();
+    Wishlists getWishlistById(String id);
+    Wishlists addWishlist(Wishlists wishlists);
+    Wishlists updateWishlists(Wishlists wishlists);
 }

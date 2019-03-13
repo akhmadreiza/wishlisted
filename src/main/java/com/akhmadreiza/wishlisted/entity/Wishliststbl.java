@@ -1,42 +1,20 @@
-package com.akhmadreiza.wishlisted.apis;
+package com.akhmadreiza.wishlisted.entity;
 
-import com.akhmadreiza.wishlisted.entity.Wishliststbl;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.akhmadreiza.wishlisted.apis.Wishlists;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class Wishlists {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Wishliststbl {
+
+    @Id
     private String id;
     private String name;
     private String dtCreated;
     private String createdBy;
     private String dtUpdated;
     private String updatedBy;
-
-    public Wishlists() {
-    }
-
-    public Wishlists(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Wishlists(Wishliststbl wishliststbl) {
-        this.id = wishliststbl.getId();
-        this.name = wishliststbl.getName();
-        this.dtCreated = wishliststbl.getDtCreated();
-        this.createdBy = wishliststbl.getCreatedBy();
-        this.dtUpdated = wishliststbl.getDtUpdated();
-        this.updatedBy = wishliststbl.getUpdatedBy();
-    }
-
-    public Wishlists(String id, String name, String dtCreated, String createdBy, String dtUpdated, String updatedBy) {
-        this.id = id;
-        this.name = name;
-        this.dtCreated = dtCreated;
-        this.createdBy = createdBy;
-        this.dtUpdated = dtUpdated;
-        this.updatedBy = updatedBy;
-    }
 
     public String getId() {
         return id;
