@@ -2,10 +2,16 @@ package com.akhmadreiza.wishlisted.apis;
 
 import com.akhmadreiza.wishlisted.entity.Wishliststbl;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import javax.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({"id", "name", "dtCreated", "createdBy", "dtUpdated", "updatedBy"})
 public class Wishlists {
     private String id;
+
+    @NotNull
     private String name;
     private String dtCreated;
     private String createdBy;

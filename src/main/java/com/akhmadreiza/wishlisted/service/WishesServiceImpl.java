@@ -29,10 +29,12 @@ public class WishesServiceImpl implements WishesService {
         List<Wishestbl> listWishestbl = wishliststbl.getWishestbl();
         for (Wishestbl wishestbl : listWishestbl) {
             Wishes wishes = new Wishes();
+            wishes.setId(wishestbl.getId());
             wishes.setName(wishestbl.getName());
             wishes.setChecked(wishestbl.isChecked());
             wishes.setDtCreated(wishestbl.getDtCreated());
             wishes.setDtUpdated(wishestbl.getDtUpdated());
+            wishes.setWishlistId(wishestbl.getWishliststbl().getId());
             result.add(wishes);
         }
 

@@ -1,6 +1,5 @@
 package com.akhmadreiza.wishlisted.endpoint;
 
-import com.akhmadreiza.wishlisted.apis.Wishes;
 import com.akhmadreiza.wishlisted.apis.Wishlists;
 import com.akhmadreiza.wishlisted.service.WishlistService;
 import com.ara27.arautil.general.GeneralUtil;
@@ -9,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,8 +21,7 @@ public class WishlistEndpoint {
 
     @GetMapping(value = "/wishlists")
     public List<Wishlists> getAllWishList() {
-        List<Wishlists> wishlistsList = wishlistService.getAllWishlist();
-        return wishlistsList;
+        return wishlistService.getAllWishlist();
     }
 
     @GetMapping(value = "/wishlists/{id}")
@@ -31,7 +30,7 @@ public class WishlistEndpoint {
     }
 
     @PostMapping(value = "/wishlists")
-    public ResponseEntity<Wishlists> addWishlist(@RequestBody Wishlists wishlists) {
+    public ResponseEntity<Wishlists> addWishlist(@RequestBody @Valid Wishlists wishlists) {
         wishlists.setId(araUtil.getUUID());
         wishlists.setDtCreated(araUtil.getCurrentLocalDateTime());
         wishlists.setCreatedBy(wishlists.getCreatedBy() == null || wishlists.getCreatedBy().isEmpty() ? "DEFAULT_USER" : wishlists.getCreatedBy());
@@ -39,7 +38,7 @@ public class WishlistEndpoint {
     }
 
     @PutMapping(value = "/wishlists/{id}")
-    public ResponseEntity<Wishlists> updateWishlist(@PathVariable("id") String id, @RequestBody Wishlists wishlists) {
+    public ResponseEntity<Wishlists> updateWishlist(@PathVariable("id") String id, @RequestBody @Valid Wishlists wishlists) {
         Wishlists oldWishlists = wishlistService.getWishlistById(id);
         if (oldWishlists != null) {
             wishlists.setId(oldWishlists.getId());
@@ -49,9 +48,5 @@ public class WishlistEndpoint {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
-
-    public Wishes addWishes(@PathVariable("wihslist_id") String wishlistId, @RequestBody Wishes wishes) {
-        return new Wishes(); //TODO implement here
     }
 }

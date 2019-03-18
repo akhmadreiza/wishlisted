@@ -5,6 +5,7 @@ import com.akhmadreiza.wishlisted.service.WishesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -14,7 +15,7 @@ public class WishesEndpoint {
     private WishesService wishesService;
 
     @PostMapping(value = "/wishlists/{wishlistsId}/wishes")
-    public Wishes addWishes(@PathVariable("wishlistsId") String wishlistId, @RequestBody Wishes wishes) {
+    public Wishes addWishes(@PathVariable("wishlistsId") String wishlistId, @RequestBody @Valid Wishes wishes) {
         return wishesService.addWish(wishlistId, wishes);
     }
 

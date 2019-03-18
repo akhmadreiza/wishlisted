@@ -1,8 +1,16 @@
 package com.akhmadreiza.wishlisted.apis;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import javax.validation.constraints.NotNull;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({"id", "name", "checked", "dtCreated", "dtUpdated", "wishlistId"})
 public class Wishes {
+    private String id;
+    @NotNull
     private String name;
 
     @JsonProperty(value = "checked")
@@ -12,12 +20,21 @@ public class Wishes {
     private String dtUpdated;
     private String wishlistId;
 
-    public Wishes(String name, boolean checked, String dtCreated, String dtUpdated, String wishlistId) {
+    public Wishes(String id, String name, boolean checked, String dtCreated, String dtUpdated, String wishlistId) {
+        this.id = id;
         this.name = name;
         this.checked = checked;
         this.dtCreated = dtCreated;
         this.dtUpdated = dtUpdated;
         this.wishlistId = wishlistId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getWishlistId() {
