@@ -1,7 +1,7 @@
 package com.akhmadreiza.wishlisted.endpoint;
 
+import com.akhmadreiza.wishlisted.apis.Wishes;
 import com.akhmadreiza.wishlisted.apis.Wishlists;
-import com.akhmadreiza.wishlisted.exception.ErrorTO;
 import com.akhmadreiza.wishlisted.service.WishlistService;
 import com.ara27.arautil.general.GeneralUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +39,9 @@ public class WishlistEndpoint {
     }
 
     @PutMapping(value = "/wishlists/{id}")
-    public ResponseEntity<Wishlists> updateWishlist(@PathVariable("id") String id, @RequestBody Wishlists wishlists){
+    public ResponseEntity<Wishlists> updateWishlist(@PathVariable("id") String id, @RequestBody Wishlists wishlists) {
         Wishlists oldWishlists = wishlistService.getWishlistById(id);
-        if(oldWishlists!=null){
+        if (oldWishlists != null) {
             wishlists.setId(oldWishlists.getId());
             wishlists.setDtUpdated(araUtil.getCurrentLocalDateTime());
             wishlists.setUpdatedBy(wishlists.getUpdatedBy() == null || wishlists.getUpdatedBy().isEmpty() ? "DEFAULT_USER" : wishlists.getUpdatedBy());
@@ -49,5 +49,9 @@ public class WishlistEndpoint {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    public Wishes addWishes(@PathVariable("wihslist_id") String wishlistId, @RequestBody Wishes wishes) {
+        return new Wishes(); //TODO implement here
     }
 }

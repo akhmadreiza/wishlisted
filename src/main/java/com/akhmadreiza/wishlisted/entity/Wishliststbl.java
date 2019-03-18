@@ -1,9 +1,9 @@
 package com.akhmadreiza.wishlisted.entity;
 
-import com.akhmadreiza.wishlisted.apis.Wishlists;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Wishliststbl {
@@ -15,6 +15,17 @@ public class Wishliststbl {
     private String createdBy;
     private String dtUpdated;
     private String updatedBy;
+
+    @OneToMany(mappedBy = "wishliststbl")
+    private List<Wishestbl> wishestbl;
+
+    public List<Wishestbl> getWishestbl() {
+        return wishestbl;
+    }
+
+    public void setWishestbl(List<Wishestbl> wishestbl) {
+        this.wishestbl = wishestbl;
+    }
 
     public String getId() {
         return id;
