@@ -50,6 +50,11 @@ public class WishlistServiceImpl implements WishlistService {
         return addWishlist(wishlists);
     }
 
+    @Override
+    public void deleteWishlists(String id) {
+        wishlistRepository.deleteById(id);
+    }
+
     static {
         GeneralUtil arautil = new GeneralUtil();
 

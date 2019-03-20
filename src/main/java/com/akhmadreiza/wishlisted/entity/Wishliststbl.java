@@ -1,5 +1,6 @@
 package com.akhmadreiza.wishlisted.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -16,7 +17,7 @@ public class Wishliststbl {
     private String dtUpdated;
     private String updatedBy;
 
-    @OneToMany(mappedBy = "wishliststbl")
+    @OneToMany(mappedBy = "wishliststbl", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Wishestbl> wishestbl;
 
     public List<Wishestbl> getWishestbl() {

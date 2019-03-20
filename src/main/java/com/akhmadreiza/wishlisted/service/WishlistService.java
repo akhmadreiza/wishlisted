@@ -11,4 +11,6 @@ public interface WishlistService {
     Wishlists getWishlistById(String id);
     Wishlists addWishlist(Wishlists wishlists);
     Wishlists updateWishlists(Wishlists wishlists);
+
+    void deleteWishlists(String id);
 }
