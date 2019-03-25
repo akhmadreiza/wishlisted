@@ -43,7 +43,9 @@ public class WishesServiceImpl implements WishesService {
 
     @Override
     public Wishes getWish(String wishlistsId, String wishId) {
-        return null;
+        Wishliststbl wishliststbl = wishlistRepository.getOne(wishlistsId);
+        Wishestbl wishestbl = wishesRepository.findById(wishId).get();
+        return new Wishes(wishestbl.getId(), wishestbl.getName(), wishestbl.isChecked(), wishestbl.getDtCreated(), wishestbl.getDtUpdated(), wishliststbl.getId());
     }
 
     @Override
@@ -64,7 +66,7 @@ public class WishesServiceImpl implements WishesService {
     }
 
     @Override
-    public Wishes updateWish(String wishlistId) {
+    public Wishes updateWish(String wishlistId, String wishesId) {
         return null;
     }
 }

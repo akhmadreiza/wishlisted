@@ -13,5 +13,5 @@ public interface WishesService {
 
     Wishes addWish(String wishlistId, Wishes wishes);
 
-    Wishes updateWish(String wishlistId);
+    Wishes updateWish(String wishlistId, String wishesId);
 }

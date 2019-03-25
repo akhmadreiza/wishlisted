@@ -23,4 +23,9 @@ public class WishesEndpoint {
     public List<Wishes> getAllWishesByWishlistId(@PathVariable("wishlistsId") String wishlistsId) {
         return wishesService.getAllWishes(wishlistsId);
     }
+
+    @GetMapping(value = "/wishlists/{wishlistsId}/wishes/{wishesId}")
+    public Wishes getWisheshByWishlistIdAndId(@PathVariable("wishlistsId") String wishlistsId, @PathVariable("wishesId") String wishesId) {
+        return wishesService.getWish(wishlistsId, wishesId);
+    }
 }
