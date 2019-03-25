@@ -28,4 +28,9 @@ public class WishesEndpoint {
     public Wishes getWisheshByWishlistIdAndId(@PathVariable("wishlistsId") String wishlistsId, @PathVariable("wishesId") String wishesId) {
         return wishesService.getWish(wishlistsId, wishesId);
     }
+
+    @PutMapping(value = "/wishlists/{wishlistsId}/wishes/{wishesId}")
+    public Wishes updateWish(@PathVariable("wishlistsId") String wishlistsId, @PathVariable("wishesId") String wishesId, @RequestBody @Valid Wishes wishes) {
+        return wishesService.updateWish(wishlistsId, wishesId, wishes);
+    }
 }

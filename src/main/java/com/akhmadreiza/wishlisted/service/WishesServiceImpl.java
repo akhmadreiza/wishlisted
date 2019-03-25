@@ -55,8 +55,8 @@ public class WishesServiceImpl implements WishesService {
         Wishliststbl wishliststbl = wishlistRepository.getOne(wishlistId);
 
         Wishestbl wishestbl = new Wishestbl();
-        wishestbl.setId(generalUtil.getUUID());
-        wishestbl.setDtCreated(generalUtil.getCurrentLocalDateTime());
+        wishestbl.setId(wishes.getId() == null || wishes.getId().isEmpty() ? generalUtil.getUUID() : wishes.getId());
+        wishestbl.setDtCreated(wishes.getDtCreated() == null || wishes.getDtCreated().isEmpty() ? generalUtil.getCurrentLocalDateTime() : wishes.getDtCreated());
         wishestbl.setName(wishes.getName());
         wishestbl.setChecked(wishes.isChecked());
         wishestbl.setWishliststbl(wishliststbl);
@@ -66,7 +66,12 @@ public class WishesServiceImpl implements WishesService {
     }
 
     @Override
-    public Wishes updateWish(String wishlistId, String wishesId) {
-        return null;
+    public Wishes updateWish(String wishlistId, String wishesId, Wishes wishes) {
+        Wishes oldWishes = getWish(wishlistId, wishesId);
+        GeneralUtil generalUtil = new GeneralUtil();
+        wishes.setId(oldWishes.getId());
+        wishes.setDtUpdated(generalUtil.getCurrentLocalDateTime());
+        wishes.setDtCreated(oldWishes.getDtCreated());
+        return addWish(wishlistId, wishes);
     }
 }
