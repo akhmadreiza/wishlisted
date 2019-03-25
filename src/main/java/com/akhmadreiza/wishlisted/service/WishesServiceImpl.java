@@ -74,4 +74,11 @@ public class WishesServiceImpl implements WishesService {
         wishes.setDtCreated(oldWishes.getDtCreated());
         return addWish(wishlistId, wishes);
     }
+
+    @Override
+    public void deleteWish(String wishlistId, String wishId) {
+        Wishliststbl wishliststbl = wishlistRepository.getOne(wishlistId);
+        Wishestbl wishestbl = wishesRepository.getOne(wishId);
+        wishesRepository.deleteById(wishId);
+    }
 }

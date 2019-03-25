@@ -3,6 +3,8 @@ package com.akhmadreiza.wishlisted.endpoint;
 import com.akhmadreiza.wishlisted.apis.Wishes;
 import com.akhmadreiza.wishlisted.service.WishesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,5 +34,11 @@ public class WishesEndpoint {
     @PutMapping(value = "/wishlists/{wishlistsId}/wishes/{wishesId}")
     public Wishes updateWish(@PathVariable("wishlistsId") String wishlistsId, @PathVariable("wishesId") String wishesId, @RequestBody @Valid Wishes wishes) {
         return wishesService.updateWish(wishlistsId, wishesId, wishes);
+    }
+
+    @DeleteMapping(value = "/wishlists/{wishlistsId}/wishes/{wishesId}")
+    public ResponseEntity deleteWish(@PathVariable("wishlistsId") String wishlistsId, @PathVariable("wishesId") String wishesId) {
+        wishesService.deleteWish(wishlistsId, wishesId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
