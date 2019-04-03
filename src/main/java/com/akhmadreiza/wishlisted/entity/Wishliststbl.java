@@ -16,6 +16,7 @@ public class Wishliststbl {
     private String createdBy;
     private String dtUpdated;
     private String updatedBy;
+    private boolean completed;
 
     @OneToMany(mappedBy = "wishliststbl", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Wishestbl> wishestbl;
@@ -74,5 +75,13 @@ public class Wishliststbl {
 
     public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

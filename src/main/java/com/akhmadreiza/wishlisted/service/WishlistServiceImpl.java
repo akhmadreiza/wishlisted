@@ -1,6 +1,7 @@
 package com.akhmadreiza.wishlisted.service;
 
 import com.akhmadreiza.wishlisted.apis.Wishlists;
+import com.akhmadreiza.wishlisted.converter.WishlistConverter;
 import com.akhmadreiza.wishlisted.entity.Wishliststbl;
 import com.akhmadreiza.wishlisted.repository.WishlistRepository;
 import com.ara27.arautil.general.GeneralUtil;
@@ -20,6 +21,9 @@ public class WishlistServiceImpl implements WishlistService {
     @Autowired
     private WishlistRepository wishlistRepository;
 
+    @Autowired
+    private WishlistConverter wishlistConverter;
+
     @Override
     public List<Wishlists> getAllWishlist() {
         List<Wishlists> allWishlists = new ArrayList<>();
@@ -35,19 +39,17 @@ public class WishlistServiceImpl implements WishlistService {
     @Override
     public Wishlists addWishlist(Wishlists wishlists) {
         Wishliststbl wishliststbl = new Wishliststbl();
-        wishliststbl.setId(wishlists.getId());
-        wishliststbl.setDtCreated(wishlists.getDtCreated());
-        wishliststbl.setCreatedBy(wishlists.getCreatedBy());
-        wishliststbl.setName(wishlists.getName());
-        wishliststbl.setDtUpdated(wishlists.getDtUpdated());
-        wishliststbl.setUpdatedBy(wishlists.getUpdatedBy());
+        wishlistConverter.convert(wishlists, wishliststbl);
         wishlistRepository.save(wishliststbl);
-        return new Wishlists(wishlists.getId(), wishlists.getName());
+        return new Wishlists(wishlists.getId(), wishlists.getName(), wishlists.isCompleted());
     }
 
     @Override
-    public Wishlists updateWishlists(Wishlists wishlists) {
-        return addWishlist(wishlists);
+    public Wishlists updateWishlists(Wishlists wishlists, String id) {
+        Wishliststbl wishliststbl = wishlistRepository.findById(id).get();
+        wishlistConverter.convert(wishlists, wishliststbl);
+        wishlistRepository.save(wishliststbl);
+        return new Wishlists(wishlists.getId(), wishlists.getName(), wishlists.isCompleted());
     }
 
     @Override

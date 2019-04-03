@@ -10,7 +10,7 @@ public interface WishlistService {
     List<Wishlists> getAllWishlist();
     Wishlists getWishlistById(String id);
     Wishlists addWishlist(Wishlists wishlists);
-    Wishlists updateWishlists(Wishlists wishlists);
 
+    Wishlists updateWishlists(Wishlists wishlists, String id);
     void deleteWishlists(String id);
 }

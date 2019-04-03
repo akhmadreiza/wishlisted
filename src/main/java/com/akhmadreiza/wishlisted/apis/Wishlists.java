@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import javax.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"id", "name", "dtCreated", "createdBy", "dtUpdated", "updatedBy"})
+@JsonPropertyOrder({"id", "name", "dtCreated", "createdBy", "dtUpdated", "updatedBy", "completed"})
 public class Wishlists {
     private String id;
 
@@ -17,13 +17,15 @@ public class Wishlists {
     private String createdBy;
     private String dtUpdated;
     private String updatedBy;
+    private boolean completed;
 
     public Wishlists() {
     }
 
-    public Wishlists(String id, String name) {
+    public Wishlists(String id, String name, boolean completed) {
         this.id = id;
         this.name = name;
+        this.completed = completed;
     }
 
     public Wishlists(Wishliststbl wishliststbl) {
@@ -33,15 +35,25 @@ public class Wishlists {
         this.createdBy = wishliststbl.getCreatedBy();
         this.dtUpdated = wishliststbl.getDtUpdated();
         this.updatedBy = wishliststbl.getUpdatedBy();
+        this.completed = wishliststbl.isCompleted();
     }
 
-    public Wishlists(String id, String name, String dtCreated, String createdBy, String dtUpdated, String updatedBy) {
+    public Wishlists(String id, @NotNull String name, String dtCreated, String createdBy, String dtUpdated, String updatedBy, boolean completed) {
         this.id = id;
         this.name = name;
         this.dtCreated = dtCreated;
         this.createdBy = createdBy;
         this.dtUpdated = dtUpdated;
         this.updatedBy = updatedBy;
+        this.completed = completed;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public String getId() {

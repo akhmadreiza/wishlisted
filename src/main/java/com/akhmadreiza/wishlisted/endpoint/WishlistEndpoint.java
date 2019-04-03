@@ -39,15 +39,7 @@ public class WishlistEndpoint {
 
     @PutMapping(value = "/wishlists/{id}")
     public ResponseEntity<Wishlists> updateWishlist(@PathVariable("id") String id, @RequestBody @Valid Wishlists wishlists) {
-        Wishlists oldWishlists = wishlistService.getWishlistById(id);
-        if (oldWishlists != null) {
-            wishlists.setId(oldWishlists.getId());
-            wishlists.setDtUpdated(araUtil.getCurrentLocalDateTime());
-            wishlists.setUpdatedBy(wishlists.getUpdatedBy() == null || wishlists.getUpdatedBy().isEmpty() ? "DEFAULT_USER" : wishlists.getUpdatedBy());
-            return new ResponseEntity<>(wishlistService.updateWishlists(wishlists), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(wishlistService.updateWishlists(wishlists, id), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/wishlists/{id}")
