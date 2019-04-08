@@ -4,17 +4,29 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
 public class Wishliststbl {
 
     @Id
+    @Size(max = 191)
     private String id;
+
+    @Size(max = 191)
     private String name;
+
+    @Size(max = 191)
     private String dtCreated;
+
+    @Size(max = 191)
     private String createdBy;
+
+    @Size(max = 191)
     private String dtUpdated;
+
+    @Size(max = 191)
     private String updatedBy;
     private boolean completed;
 

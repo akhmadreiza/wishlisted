@@ -44,6 +44,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.4.1</version>
+        </dependency>
 		<!--SWAGGER START-->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -63,6 +68,24 @@
 		</dependency>
 
 	</dependencies>
+
+    <profiles>
+        <profile>
+            <id>devh2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <active.profile>devh2</active.profile>
+            </properties>
+        </profile>
+        <profile>
+            <id>devmaria</id>
+            <properties>
+                <active.profile>devmaria</active.profile>
+            </properties>
+        </profile>
+    </profiles>
 
 	<build>
 		<plugins>

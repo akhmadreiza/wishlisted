@@ -4,18 +4,27 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Wishestbl {
     @Id
+    @Size(max = 191)
     private String id;
+
+    @Size(max = 191)
     private String name;
     private boolean checked;
+
+    @Size(max = 191)
     private String dtCreated;
+
+    @Size(max = 191)
     private String dtUpdated;
 
     @ManyToOne
-    @JoinColumn(name = "wishliststbl_id")
+    @JoinColumn(name = "wltblid", columnDefinition = "varchar(191)")
+    //add column definition due to error when creating with mariadb utf8mb4
     private Wishliststbl wishliststbl;
 
     public Wishliststbl getWishliststbl() {
