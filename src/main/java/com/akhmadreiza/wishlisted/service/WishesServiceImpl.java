@@ -36,6 +36,7 @@ public class WishesServiceImpl implements WishesService {
             wishes.setDtCreated(wishestbl.getDtCreated());
             wishes.setDtUpdated(wishestbl.getDtUpdated());
             wishes.setWishlistId(wishestbl.getWishliststbl().getId());
+            wishes.setPrice(wishestbl.getPrice());
             result.add(wishes);
         }
 
