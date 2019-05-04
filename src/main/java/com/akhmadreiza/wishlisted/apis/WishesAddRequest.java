@@ -13,6 +13,7 @@ public class WishesAddRequest {
     private String name;
     @JsonProperty(value = "checked")
     private boolean checked;
+    private Long price;
 
     public WishesAddRequest() {
     }
@@ -31,5 +32,13 @@ public class WishesAddRequest {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 }
