@@ -1,6 +1,7 @@
 package com.akhmadreiza.wishlisted.service;
 
 import com.akhmadreiza.wishlisted.apis.Wishes;
+import com.akhmadreiza.wishlisted.apis.WishesAddRequest;
 import com.akhmadreiza.wishlisted.entity.Wishestbl;
 import com.akhmadreiza.wishlisted.entity.Wishliststbl;
 import com.akhmadreiza.wishlisted.repository.WishesRepository;
@@ -49,6 +50,21 @@ public class WishesServiceImpl implements WishesService {
     }
 
     @Override
+    public WishesAddRequest addWish(String wishlistId, WishesAddRequest wishesAddRequest) {
+        GeneralUtil generalUtil = new GeneralUtil();
+        Wishliststbl wishliststbl = wishlistRepository.getOne(wishlistId);
+        Wishestbl wishestbl = new Wishestbl();
+        wishestbl.setId(generalUtil.getUUID());
+        wishestbl.setDtCreated(generalUtil.getCurrentLocalDateTime());
+        wishestbl.setName(wishesAddRequest.getName());
+        wishestbl.setChecked(wishesAddRequest.isChecked());
+        wishestbl.setWishliststbl(wishliststbl);
+        wishesRepository.save(wishestbl);
+        return wishesAddRequest;
+    }
+
+    @Override
+    @Deprecated
     public Wishes addWish(String wishlistId, Wishes wishes) {
         GeneralUtil generalUtil = new GeneralUtil();
 
