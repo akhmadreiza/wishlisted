@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class User {
     @Id
+    @Size(max = 191)
     private String id;
 
     @Size(max = 191)
