@@ -1,6 +1,8 @@
 package com.akhmadreiza.wishlisted.endpoint;
 
 import com.akhmadreiza.wishlisted.apis.Wishlists;
+import com.akhmadreiza.wishlisted.config.JwtTokenUtil;
+import com.akhmadreiza.wishlisted.constants.AuthenticationConstants;
 import com.akhmadreiza.wishlisted.service.WishlistService;
 import com.ara27.arautil.general.GeneralUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +20,30 @@ public class WishlistEndpoint {
     @Autowired
     private WishlistService wishlistService;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     private GeneralUtil araUtil = new GeneralUtil();
 
     @GetMapping(value = "/wishlists")
-    public List<Wishlists> getAllWishList() {
-        return wishlistService.getAllWishlist();
+    public List<Wishlists> getAllWishList(@RequestHeader(value = "Authorization") String authToken) {
+        final String userName = jwtTokenUtil.getUsernameFromToken(authToken.replace(AuthenticationConstants.TOKEN_PREFIX, ""));
+        return wishlistService.getAllWishlistByUserName(userName);
     }
 
     @GetMapping(value = "/wishlists/{id}")
-    public Wishlists getWishListById(@PathVariable("id") String id) {
-        return wishlistService.getWishlistById(id);
+    public Wishlists getWishListById(@PathVariable("id") String id, @RequestHeader(value = "Authorization") String authToken) {
+        final String userName = jwtTokenUtil.getUsernameFromToken(authToken.replace(AuthenticationConstants.TOKEN_PREFIX, ""));
+        return wishlistService.getWishlistByIdAndUserName(id, userName);
     }
 
     @PostMapping(value = "/wishlists")
-    public ResponseEntity<Wishlists> addWishlist(@RequestBody @Valid Wishlists wishlists) {
+    public ResponseEntity<Wishlists> addWishlist(@RequestBody @Valid Wishlists wishlists, @RequestHeader(value = "Authorization") String authToken) {
+        final String userName = jwtTokenUtil.getUsernameFromToken(authToken.replace(AuthenticationConstants.TOKEN_PREFIX, ""));
         wishlists.setId(araUtil.getUUID());
         wishlists.setDtCreated(araUtil.getCurrentLocalDateTime());
-        wishlists.setCreatedBy(wishlists.getCreatedBy() == null || wishlists.getCreatedBy().isEmpty() ? "DEFAULT_USER" : wishlists.getCreatedBy());
-        return new ResponseEntity<Wishlists>(wishlistService.addWishlist(wishlists), HttpStatus.CREATED);
+        wishlists.setCreatedBy(wishlists.getCreatedBy() == null || wishlists.getCreatedBy().isEmpty() ? userName : wishlists.getCreatedBy());
+        return new ResponseEntity<Wishlists>(wishlistService.addWishlist(wishlists, userName), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/wishlists/{id}")
