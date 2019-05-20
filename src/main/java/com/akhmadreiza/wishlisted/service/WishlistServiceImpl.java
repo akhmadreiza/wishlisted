@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class WishlistServiceImpl implements WishlistService {
@@ -32,14 +33,44 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
+    public List<Wishlists> getAllWishlistByUserName(String userName) {
+        List<Wishlists> allUserWishlists = new ArrayList<>();
+        List<Wishliststbl> wishliststbls = wishlistRepository.findAll();
+        for (Wishliststbl wishliststbl : wishliststbls) {
+            if (wishliststbl.getUserName().equals(userName)) {
+                allUserWishlists.add(new Wishlists(wishliststbl));
+            }
+        }
+        return allUserWishlists;
+    }
+
+    @Override
     public Wishlists getWishlistById(String id) {
         return new Wishlists(wishlistRepository.findById(id).get());
+    }
+
+    @Override
+    public Wishlists getWishlistByIdAndUserName(String id, String userName) {
+        Wishliststbl wishliststbl = wishlistRepository.findById(id).get();
+        if (!wishliststbl.getUserName().equals(userName)) {
+            throw new NoSuchElementException("No value present");
+        }
+        return new Wishlists(wishliststbl);
     }
 
     @Override
     public Wishlists addWishlist(Wishlists wishlists) {
         Wishliststbl wishliststbl = new Wishliststbl();
         wishlistConverter.convert(wishlists, wishliststbl);
+        wishlistRepository.save(wishliststbl);
+        return new Wishlists(wishlists.getId(), wishlists.getName(), wishlists.isCompleted());
+    }
+
+    @Override
+    public Wishlists addWishlist(Wishlists wishlists, String userName) {
+        Wishliststbl wishliststbl = new Wishliststbl();
+        wishlistConverter.convert(wishlists, wishliststbl);
+        wishliststbl.setUserName(userName);
         wishlistRepository.save(wishliststbl);
         return new Wishlists(wishlists.getId(), wishlists.getName(), wishlists.isCompleted());
     }

@@ -33,6 +33,17 @@ public class Wishliststbl {
     @OneToMany(mappedBy = "wishliststbl", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Wishestbl> wishestbl;
 
+    @Size(max = 191)
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public List<Wishestbl> getWishestbl() {
         return wishestbl;
     }
