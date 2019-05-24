@@ -1,6 +1,7 @@
 package com.akhmadreiza.wishlisted.service;
 
 import com.akhmadreiza.wishlisted.apis.Wishes;
+import com.akhmadreiza.wishlisted.apis.WishesAddRequest;
 import com.akhmadreiza.wishlisted.entity.Wishestbl;
 import com.akhmadreiza.wishlisted.entity.Wishliststbl;
 import com.akhmadreiza.wishlisted.repository.WishesRepository;
@@ -35,6 +36,7 @@ public class WishesServiceImpl implements WishesService {
             wishes.setDtCreated(wishestbl.getDtCreated());
             wishes.setDtUpdated(wishestbl.getDtUpdated());
             wishes.setWishlistId(wishestbl.getWishliststbl().getId());
+            wishes.setPrice(wishestbl.getPrice());
             result.add(wishes);
         }
 
@@ -45,10 +47,26 @@ public class WishesServiceImpl implements WishesService {
     public Wishes getWish(String wishlistsId, String wishId) {
         Wishliststbl wishliststbl = wishlistRepository.getOne(wishlistsId);
         Wishestbl wishestbl = wishesRepository.findById(wishId).get();
-        return new Wishes(wishestbl.getId(), wishestbl.getName(), wishestbl.isChecked(), wishestbl.getDtCreated(), wishestbl.getDtUpdated(), wishliststbl.getId());
+        return new Wishes(wishestbl.getId(), wishestbl.getName(), wishestbl.isChecked(), wishestbl.getDtCreated(), wishestbl.getDtUpdated(), wishliststbl.getId(), wishestbl.getPrice());
     }
 
     @Override
+    public WishesAddRequest addWish(String wishlistId, WishesAddRequest wishesAddRequest) {
+        GeneralUtil generalUtil = new GeneralUtil();
+        Wishliststbl wishliststbl = wishlistRepository.getOne(wishlistId);
+        Wishestbl wishestbl = new Wishestbl();
+        wishestbl.setId(generalUtil.getUUID());
+        wishestbl.setDtCreated(generalUtil.getCurrentLocalDateTime());
+        wishestbl.setName(wishesAddRequest.getName());
+        wishestbl.setChecked(wishesAddRequest.isChecked());
+        wishestbl.setWishliststbl(wishliststbl);
+        wishestbl.setPrice(wishesAddRequest.getPrice());
+        wishesRepository.save(wishestbl);
+        return wishesAddRequest;
+    }
+
+    @Override
+    @Deprecated
     public Wishes addWish(String wishlistId, Wishes wishes) {
         GeneralUtil generalUtil = new GeneralUtil();
 

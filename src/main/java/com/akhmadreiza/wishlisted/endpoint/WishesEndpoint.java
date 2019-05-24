@@ -1,6 +1,7 @@
 package com.akhmadreiza.wishlisted.endpoint;
 
 import com.akhmadreiza.wishlisted.apis.Wishes;
+import com.akhmadreiza.wishlisted.apis.WishesAddRequest;
 import com.akhmadreiza.wishlisted.service.WishesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,13 +12,14 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class WishesEndpoint {
 
     @Autowired
     private WishesService wishesService;
 
     @PostMapping(value = "/wishlists/{wishlistsId}/wishes")
-    public Wishes addWishes(@PathVariable("wishlistsId") String wishlistId, @RequestBody @Valid Wishes wishes) {
+    public WishesAddRequest addWishes(@PathVariable("wishlistsId") String wishlistId, @RequestBody @Valid WishesAddRequest wishes) {
         return wishesService.addWish(wishlistId, wishes);
     }
 

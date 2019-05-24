@@ -27,6 +27,8 @@ public class Wishestbl {
     //add column definition due to error when creating with mariadb utf8mb4
     private Wishliststbl wishliststbl;
 
+    private Long price;
+
     public Wishliststbl getWishliststbl() {
         return wishliststbl;
     }
@@ -73,5 +75,13 @@ public class Wishestbl {
 
     public void setDtUpdated(String dtUpdated) {
         this.dtUpdated = dtUpdated;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 }

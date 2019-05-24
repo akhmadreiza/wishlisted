@@ -19,8 +19,9 @@ public class Wishes {
     private String dtCreated;
     private String dtUpdated;
     private String wishlistId;
+    private Long price;
 
-    public Wishes(String id, String name, boolean checked, String dtCreated, String dtUpdated, String wishlistId) {
+    public Wishes(String id, String name, boolean checked, String dtCreated, String dtUpdated, String wishlistId, Long price) {
         this.id = id;
         this.name = name;
         this.checked = checked;
@@ -78,5 +79,13 @@ public class Wishes {
 
     public void setDtUpdated(String dtUpdated) {
         this.dtUpdated = dtUpdated;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 }
